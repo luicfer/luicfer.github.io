@@ -1,0 +1,188 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    
+    <meta name="author" content="lucifer">
+    
+    <meta name="description" content="准备工作
+
+GitHub
+Node.js
+Hexo
+
+GitHub
+先去 GitHub 注册一个账号并且弄好自己的 GitHub Pages 当然还有自己的 SSH keys 什么的
+Node.js
+官网传送门 Node.js 下载安装就不多说什么了
+Hexo
+安装完 Node.js 后在命令行中输">
+    
+    
+
+    
+    
+    
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>本博客的搭建过程 | lucifer&#39;s blog · 人生在于折腾</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" type="text/css">
+
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+
+    <!-- Javascript -->
+    <script src="/js/jquery-2.1.0.min.js"></script>
+    <script src="/js/jquery.backstretch.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/js/headroom.min.js"></script>
+    <script src="/js/jquery.headroom.min.js"></script> 
+    <script src="/js/common.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="banner">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="http://ikaros.club" title="lucifer's blog">lucifer&#39;s blog</a>
+            </div>
+
+            <div role="navigation" class="collapse navbar-collapse bs-navbar-collapse">
+                <p class="navbar-text pull-right">人生在于折腾</p>
+
+                <ul class="nav navbar-nav">
+                    
+                    <li id="nav-index"><a href="/">首页</a></li>
+                    
+                    <li id="nav-archives"><a href="/archives">归档</a></li>
+                    
+                    <li id="nav-tags"><a href="/tags">标签</a></li>
+                    
+                    <li id="nav-categories"><a href="/categories">分类</a></li>
+                    
+                    <li id="nav-about"><a href="/about">关于</a></li>
+                    
+                    
+                    <li><a href="https://github.com/luicfer" target="_blank">GitHub</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <script>
+    var backRoot = "/images/background/";
+    var backArray = [ "1.jpg", "2.jpg",  ];
+    //console.log(backArray);
+        
+    $(function() {
+        // page-id...
+        var pageId = "2014/09/24/build-blog-with-hexo/";
+        pageId = pageId.substr(0, pageId.indexOf("/"));
+        if(pageId === "") pageId = "index";
+        
+        $("#nav-" + pageId).addClass("active");
+    });
+    </script>
+    <article class="post container">
+    <div class="well post-body first-post last-post">
+        <h1>本博客的搭建过程</h1>
+        
+        <div class="time-info">
+发表于:<time datetime="2014-09-24T10:48:59.000Z" itemprop="datePublished">9月 24 2014</time>,
+更新于:<time datetime="2014-09-24T14:22:59.000Z" itemprop="dateModified">9月 24 2014</time>,
+By <a href="http://ikaros.club" title="lucifer">lucifer</a>
+        </div>
+        
+        <div class="post-body-inner">
+            <div id="toc" class="toc-article well">
+                <strong class="toc-title">大纲</strong>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#准备工作"><span class="toc-number">1.</span> <span class="toc-text">准备工作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#GitHub"><span class="toc-number">1.1.</span> <span class="toc-text">GitHub</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Node-js"><span class="toc-number">1.2.</span> <span class="toc-text">Node.js</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hexo"><span class="toc-number">1.3.</span> <span class="toc-text">Hexo</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hexo_部署"><span class="toc-number">2.</span> <span class="toc-text">Hexo 部署</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Hexo_初始化"><span class="toc-number">2.1.</span> <span class="toc-text">Hexo 初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hexo_配置"><span class="toc-number">2.2.</span> <span class="toc-text">Hexo 配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hexo_生成静态博客"><span class="toc-number">2.3.</span> <span class="toc-text">Hexo 生成静态博客</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hexo_push_博客到_GitHub_Pages"><span class="toc-number">2.4.</span> <span class="toc-text">Hexo push 博客到 GitHub Pages</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hit"><span class="toc-number">3.</span> <span class="toc-text">Hit</span></a></li></ol>
+            </div>
+            
+            <h1 id="准备工作">准备工作</h1>
+<ol>
+<li>GitHub</li>
+<li>Node.js</li>
+<li>Hexo</li>
+</ol>
+<h2 id="GitHub">GitHub</h2>
+<p>先去 <a href="https://github.com/" target="_blank" rel="external">GitHub</a> 注册一个账号并且弄好自己的 <a href="https://pages.github.com/" target="_blank" rel="external">GitHub Pages</a> 当然还有自己的 SSH keys 什么的</p>
+<h2 id="Node-js">Node.js</h2>
+<p>官网传送门 <a href="http://nodejs.org/" target="_blank" rel="external">Node.js</a> 下载安装就不多说什么了</p>
+<h2 id="Hexo">Hexo</h2>
+<p>安装完 Node.js 后在命令行中输入</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install -g hexo</div></pre></td></tr></table></figure>
+
+<p>好了 Hexo 也安装完毕</p>
+<h1 id="Hexo_部署">Hexo 部署</h1>
+<h2 id="Hexo_初始化">Hexo 初始化</h2>
+<p>进入一个空目录</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ hexo init</div><div class="line">$ npm install</div></pre></td></tr></table></figure>
+
+<p>完成后目录结构大致如下</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">.</div><div class="line">├── _config.yml</div><div class="line">├── package.json</div><div class="line">├── scaffolds</div><div class="line">├── scripts</div><div class="line">├── node_modules</div><div class="line">├── <span class="built_in">source</span></div><div class="line">|   └── _posts</div><div class="line">└── themes</div></pre></td></tr></table></figure>
+
+<h2 id="Hexo_配置">Hexo 配置</h2>
+<p>配置文件为<code>_config.yml</code>各个配置项的含义见官方文档-&gt;<a href="http://hexo.io/docs/configuration.html" target="_blank" rel="external">传送门</a><br>唔，照着文档配置好了之后,就配置好了呗。</p>
+<h2 id="Hexo_生成静态博客">Hexo 生成静态博客</h2>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo g</div></pre></td></tr></table></figure>
+
+<p>一大串文本闪过，静态博客已经被生成了。可以去 Public 目录下查看</p>
+<h2 id="Hexo_push_博客到_GitHub_Pages">Hexo push 博客到 GitHub Pages</h2>
+<p>前面 Hexo 配置以我为例<code>_config.yml</code>文件中的配置项</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">	<span class="built_in">type</span>: github</div><div class="line">	repository: git@github.com:luicfer/luicfer.github.io.git</div><div class="line">	branch: master</div></pre></td></tr></table></figure>
+
+<p>这样只需在命令行中输入</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo d -g</div></pre></td></tr></table></figure>
+
+<p>自动推送生成好的静态博客到 GitHub 了</p>
+<h1 id="Hit">Hit</h1>
+<p>GitHub Pages 可以使用自己的域名，但是需要的 Repo 中跟目录下有一个 CNAME 文件包含你的域名<br>而 Hexo 每次使用 <code>$ hexo d</code>发布都会对分支进行修改,而手动建立的 CNAME 文件就会被删除。</p>
+<p>解决办法为在 Hexo <code>source</code>目录下添加 CNAME 文件,这样 Hexo 自己会 push 这个文件到分支上。</p>
+
+            
+            <section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"lucifer1029"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+        </div>
+    </div>
+</article>
+
+    <footer id="footer">
+    <div id="bottom-tip">
+        lucifer&#39;s blog —— <small>人生在于折腾</small>
+    </div>
+        <small>该博客由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动，搭载 <a href="https://github.com/luicfer/hexadillax" target="_blank">Hexadillax</a> 主题</small><br />
+        <small>&copy; 2014 Lucifer</small>
+    </footer>
+</body>
+</html>
