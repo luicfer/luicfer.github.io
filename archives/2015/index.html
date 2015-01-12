@@ -17,7 +17,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tag: 多模匹配 | lucifer&#39;s blog · 人生在于折腾</title>
+    <title>Archives: 2015 | lucifer&#39;s blog · 人生在于折腾</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" type="text/css">
@@ -94,7 +94,7 @@
         
     $(function() {
         // page-id...
-        var pageId = "tags/多模匹配/";
+        var pageId = "archives/2015/";
         pageId = pageId.substr(0, pageId.indexOf("/"));
         if(pageId === "") pageId = "index";
         
@@ -102,34 +102,36 @@
     });
     </script>
     
+
 <div class="container archive-body">
     <div class="row">
-        <div class="col-xs-3 well">
-            <div class="archive-title" >
-                <h2 class="tag-icon">多模匹配</h2>
-                <div>
-                    <a href="/tags"><< 返回标签列表</a> 
-                </div>
-            </div>
+        <div class="col-xs-2 well">
+            <h2 class="archive-icon">2015</h2>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">January 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">November 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">September 2014</a><span class="archive-list-count">2</span></li></ul>
         </div>
         
-        <div class="col-xs-9" id="tag-list-body">
+        <div class="col-xs-10">
             
             <article class="post">
                 <div class="jumbotron">
-                    <h1><a href="/2014/10/07/AhoCorasick/" title="AhoCorasick">AhoCorasick</a></h1>
+                    <h1><a href="/2015/01/12/xss-1/" title="XSS入坑系列-(一)">XSS入坑系列-(一)</a></h1>
 
                     
-                        <p>起因
-总有人在网站里发一些不河蟹的东西。所以需要对里面的文本进行关键词过滤。之前是对字典的每一个词进行匹配。4000行的字典效率我就不说了- -。好歹曾经撸过 ACM 对于这个关键词匹配我自然想到了 AC 自动机，所以我就主动承包了这个任务。
-简介
-首先简要介绍一下 AC 自动机</p>
+                        <p>XSS入坑-通关游戏
+什么是 XSS 之类的就不说了。直接上一个 XSS 游戏的地址然后附上通关心得
+第一关
+非常容易，什么过滤都没做直接在输入框里输入
+1&amp;lt;script&amp;gt;alert()&amp;lt;/script&amp;gt;
+
+通关 (^o^)/
+第二关
+HTML 中加入 S</p>
                     
 
                     <p class="say-title">
                         —— <img src="/images/ikaros.jpg" class="img-circle index-post-avatar" />
                         <a href="http://ikaros.club" target="_blank" title="lucifer">lucifer</a>
-                        于10月 7 2014自豪地以 <a class="article-tag-link" href="/tags/PHP/">PHP</a>, <a class="article-tag-link" href="/tags/多模匹配/">多模匹配</a>, <a class="article-tag-link" href="/tags/算法/">算法</a> 唠嗑
+                        于1月 12 2015自豪地以 <a class="article-tag-link" href="/tags/Javascript/">Javascript</a>, <a class="article-tag-link" href="/tags/XSS/">XSS</a> 唠嗑
                     </p>
                 </div>
             </article>
@@ -138,10 +140,14 @@
             
         </div>
     </div>
-        
-    <div class="col-xs-19 all-list-box">
-    </div>
 </div>
+
+<script>
+$(function() {
+    $(".archive-list-count").addClass("badge");
+});
+</script>
+
     <footer id="footer">
     <div id="bottom-tip">
         lucifer&#39;s blog —— <small>人生在于折腾</small>
