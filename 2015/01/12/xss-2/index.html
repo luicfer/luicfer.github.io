@@ -6,7 +6,10 @@
     
     <meta name="author" content="lucifer">
     
-    <meta name="description" content="lucifer&#39;s blog">
+    <meta name="description" content="XSS入坑-继续通关游戏
+接着上一次的游戏，来撸剩下来的3关传送门
+第四关
+这一关的输出点在&amp;lt;img&amp;gt;标签的onload属性里面代码区域">
     
     
 
@@ -17,7 +20,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Archives: 2014/12 | lucifer&#39;s blog · 人生在于折腾</title>
+    <title>XSS入坑系列-(二) | lucifer&#39;s blog · 人生在于折腾</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" type="text/css">
@@ -94,60 +97,53 @@
         
     $(function() {
         // page-id...
-        var pageId = "archives/2014/12/";
+        var pageId = "2015/01/12/xss-2/";
         pageId = pageId.substr(0, pageId.indexOf("/"));
         if(pageId === "") pageId = "index";
         
         $("#nav-" + pageId).addClass("active");
     });
     </script>
-    
-
-<div class="container archive-body">
-    <div class="row">
-        <div class="col-xs-2 well">
-            <h2 class="archive-icon">2014/12</h2>
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">January 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">November 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">September 2014</a><span class="archive-list-count">2</span></li></ul>
+    <article class="post container">
+    <div class="well post-body first-post last-post">
+        <h1>XSS入坑系列-(二)</h1>
+        
+        <div class="time-info">
+发表于:<time datetime="2015-01-12T05:39:54.000Z" itemprop="datePublished">1月 12 2015</time>,
+更新于:<time datetime="2015-01-15T03:00:53.000Z" itemprop="dateModified">1月 15 2015</time>,
+By <a href="http://ikaros.club" title="lucifer">lucifer</a>
         </div>
         
-        <div class="col-xs-10">
+        <div class="post-body-inner">
+            <div id="toc" class="toc-article well">
+                <strong class="toc-title">大纲</strong>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#XSS入坑-继续通关游戏"><span class="toc-number">1.</span> <span class="toc-text">XSS入坑-继续通关游戏</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第四关"><span class="toc-number">2.</span> <span class="toc-text">第四关</span></a></li></ol>
+            </div>
             
-            <article class="post">
-                <div class="jumbotron">
-                    <h1><a href="/2014/12/02/Alfred-workflow/" title="Alfred-创建适合自己的workflow">Alfred-创建适合自己的workflow</a></h1>
+            <h1 id="XSS入坑-继续通关游戏">XSS入坑-继续通关游戏</h1>
+<p>接着上一次的游戏，来撸剩下来的3关<br><a href="http://xss-game.appspot.com/level4" target="_blank" rel="external">传送门</a></p>
+<h1 id="第四关">第四关</h1>
+<p>这一关的输出点在<code>&lt;img&gt;</code>标签的<code>onload</code>属性里面<br>代码区域</p>
 
-                    
-                        <p>Alfred
-传说中的mac神器，各种快捷启动，提高效率(不是偷懒么(╯‵□′)╯︵┻━┻)
-准备工作
-
-OS X 系统
-Alfred 带 Powerpack
-一门熟悉的语言(PHP,Ruby等等) ps:只要你能设置好，然后在终端直接运行就成
-
-Workflow的四大部分
-借用</p>
-                    
-
-                    <p class="say-title">
-                        —— <img src="/images/ikaros.jpg" class="img-circle index-post-avatar" />
-                        <a href="http://ikaros.club" target="_blank" title="lucifer">lucifer</a>
-                        于12月 2 2014自豪地以 <a class="article-tag-link" href="/tags/OS-X/">OS X</a> 唠嗑
-                    </p>
-                </div>
-            </article>
             
-            
-            
+            <section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"lucifer1029"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
         </div>
     </div>
-</div>
-
-<script>
-$(function() {
-    $(".archive-list-count").addClass("badge");
-});
-</script>
+</article>
 
     <footer id="footer">
     <div id="bottom-tip">

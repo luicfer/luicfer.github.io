@@ -2,6 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ikaros.club/2015/03/04/http-proxy/</loc>
+    <lastmod>2015-03-04T04:10:49.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://ikaros.club/2015/01/12/xss-2/</loc>
+    <lastmod>2015-01-15T03:00:53.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://ikaros.club/2015/01/12/xss-1/</loc>
     <lastmod>2015-01-12T08:23:41.000Z</lastmod>
   </url>

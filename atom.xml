@@ -1,0 +1,580 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title><![CDATA[lucifer's blog]]></title>
+  <subtitle><![CDATA[人生在于折腾]]></subtitle>
+  <link href="/atom.xml" rel="self"/>
+  <link href="http://ikaros.club/"/>
+  <updated>2015-03-04T04:11:09.030Z</updated>
+  <id>http://ikaros.club/</id>
+  
+  <author>
+    <name><![CDATA[lucifer]]></name>
+    <email><![CDATA[lucifer4he@gmail.com]]></email>
+  </author>
+  
+  <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Linux 下 HTTP 代理设置]]></title>
+    <link href="http://ikaros.club/2015/03/04/http-proxy/"/>
+    <id>http://ikaros.club/2015/03/04/http-proxy/</id>
+    <published>2015-03-04T03:23:23.000Z</published>
+    <updated>2015-03-04T04:10:49.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="起因">起因</h1>
+<p>为什么要说这个呢，主要是最近因为代理的问题遇到了个坑，所以写下来算是记录一下。</p>
+<h1 id="设置方法">设置方法</h1>
+<p>把下面一段追加到<code>.bashrc</code>就好了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> http_proxy=http://xx.xx.xx.xx:xx</div><div class="line"><span class="keyword">export</span> https_proxy=http://xx.xx.xx.xx:xx</div></pre></td></tr></table></figure>
+
+<p>设置完这个在内网的机器，就可以通过代理上网了<br>而且<code>git</code> <code>npm</code>命令也可以用了</p>
+<h1 id="坑点">坑点</h1>
+<p>上面设置完后自己用是可以了<br>我在<code>gitlab-ci-runner</code>中使用命令的过程中，出现了问题。<br><code>gitlab-ci-runner</code>执行<code>npm install</code>中无法完成下载，因为不能连接到外网。</p>
+<h1 id="解决方式">解决方式</h1>
+<p>刚开始我认为是程序里执行命令，导致命令无法获取到 Linux 的环境变量。<br>所以我使用了<code>npm set proxy</code>设置了 npm 的代理。<br>再跑一边<code>build</code>任务，(⊙v⊙)嗯，又在<code>install</code>这里跪了。<br>找了下 <code>.npmrc</code>文件发现代理已经加进去了，难道是没读取到这个文件？<br>中间各种撸了之后发现,<code>npm</code>直接使用的时候是读取的<code>~/.npmrc</code>,<code>gitlab-ci-runner</code>的<code>root</code>路径是自己的目录下的。<br>当使它在执行<code>npm</code>命令是，查找的配置路径是 <code>/home/gitlab-ci-runner/.npmrc</code><br>由于找不到配置文件，采用了默认的设置，没有代理就(╯‵□′)╯︵┻━┻了。</p>
+<h2 id="真解决方式">真解决方式</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cp ~/.npmrc /home/gitlab-ci-runner/</div></pre></td></tr></table></figure>
+
+<h1 id="总结">总结</h1>
+<p>通过一个程序去执行另外一个的时候，要注意上下文和你自己命令行直接使用的时候不一定一样。要注意啊，坑的是，要看程序是咋写的。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="起因">起因</h1>
+<p>为什么要说这个呢，主要是最近因为代理的问题遇到了个坑，所以写下来算是记录一下。</p>
+<h1 id="设置方法">设置方法</h1>
+<p>把下面一段追加到<code>.bashrc</code>就好了。</p>
+<figure c]]>
+    </summary>
+    
+      <category term="linux" scheme="http://ikaros.club/tags/linux/"/>
+    
+      <category term="编程" scheme="http://ikaros.club/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[XSS入坑系列-(二)]]></title>
+    <link href="http://ikaros.club/2015/01/12/xss-2/"/>
+    <id>http://ikaros.club/2015/01/12/xss-2/</id>
+    <published>2015-01-12T05:39:54.000Z</published>
+    <updated>2015-01-15T03:00:53.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="XSS入坑-继续通关游戏">XSS入坑-继续通关游戏</h1>
+<p>接着上一次的游戏，来撸剩下来的3关<br><a href="http://xss-game.appspot.com/level4" target="_blank" rel="external">传送门</a></p>
+<h1 id="第四关">第四关</h1>
+<p>这一关的输出点在<code>&lt;img&gt;</code>标签的<code>onload</code>属性里面<br>代码区域</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="XSS入坑-继续通关游戏">XSS入坑-继续通关游戏</h1>
+<p>接着上一次的游戏，来撸剩下来的3关<br><a href="http://xss-game.appspot.com/level4" target="_blank" rel="external">]]>
+    </summary>
+    
+      <category term="XSS" scheme="http://ikaros.club/tags/XSS/"/>
+    
+      <category term="Javascript" scheme="http://ikaros.club/tags/Javascript/"/>
+    
+      <category term="编程" scheme="http://ikaros.club/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[XSS入坑系列-(一)]]></title>
+    <link href="http://ikaros.club/2015/01/12/xss-1/"/>
+    <id>http://ikaros.club/2015/01/12/xss-1/</id>
+    <published>2015-01-12T05:39:54.000Z</published>
+    <updated>2015-01-12T08:23:41.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="XSS入坑-通关游戏">XSS入坑-通关游戏</h1>
+<p>什么是 XSS 之类的就不说了。直接上一个 <a href="http://xss-game.appspot.com/" target="_blank" rel="external">XSS</a> 游戏的地址然后附上通关心得</p>
+<h2 id="第一关">第一关</h2>
+<p>非常容易，什么过滤都没做<br>直接在输入框里输入</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;script&gt;alert()&lt;<span class="regexp">/script&gt;</span></div></pre></td></tr></table></figure>
+
+<p>通关 (^o^)/</p>
+<h2 id="第二关">第二关</h2>
+<p>HTML 中加入 Script 标签不能直接执行<br>利用 HTML 标签的事件来执行脚本<br>代码如下</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="title">img</span> <span class="attribute">src</span>=<span class="value">"xxx"</span> <span class="attribute">onerror</span>=<span class="value">alert()</span> /&gt;</span></div></pre></td></tr></table></figure>
+
+<p>随便加载一个图片路径，出错后执行了脚本</p>
+<h2 id="第三关">第三关</h2>
+<p>这一关没有任何输入框<br>通过观察可以发现 图片的切换使用了 URL 上 # 后面的参数<br>输出的地方为图片的 src 属性<br>目标代码</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">chooseTab</span><span class="params">(num)</span> </span>{</div><div class="line">        <span class="comment">// Dynamically load the appropriate image.</span></div><div class="line">        <span class="keyword">var</span> html = <span class="string">"Image "</span> + <span class="built_in">parseInt</span>(num) + <span class="string">"&lt;br&gt;"</span>;</div><div class="line">        html += <span class="string">"&lt;img src='/static/level3/cloud"</span> + num + <span class="string">".jpg' /&gt;"</span>;</div><div class="line">        $(<span class="string">'#tabContent'</span>).html(html);</div><div class="line"> </div><div class="line">        <span class="built_in">window</span>.location.hash = num;</div><div class="line"> </div><div class="line">        <span class="comment">// Select the current tab</span></div><div class="line">        <span class="keyword">var</span> tabs = <span class="built_in">document</span>.querySelectorAll(<span class="string">'.tab'</span>);</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; tabs.length; i++) {</div><div class="line">          <span class="keyword">if</span> (tabs[i].id == <span class="string">"tab"</span> + <span class="built_in">parseInt</span>(num)) {</div><div class="line">            tabs[i].className = <span class="string">"tab active"</span>;</div><div class="line">            } <span class="keyword">else</span> {</div><div class="line">            tabs[i].className = <span class="string">"tab"</span>;</div><div class="line">          }</div><div class="line">        }</div></pre></td></tr></table></figure>
+
+<p>通过闭合 src 属性 添加 onerror 事件来触发代码<br>URL 构造如下</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">http:</span>/<span class="regexp">/xss-game.appspot.com/level</span>3/frame<span class="comment">#'onerror=alert() '</span></div></pre></td></tr></table></figure>
+
+<h1 id="小结">小结</h1>
+<p>XSS 简单来说就是观察 输入点-&gt;输出点,通过各种手段让目标页面执行你的代码，啊哈哈。<br>总共有6关，等我把后面的通关了再发后面的题解</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="XSS入坑-通关游戏">XSS入坑-通关游戏</h1>
+<p>什么是 XSS 之类的就不说了。直接上一个 <a href="http://xss-game.appspot.com/" target="_blank" rel="external">XSS</a> 游]]>
+    </summary>
+    
+      <category term="XSS" scheme="http://ikaros.club/tags/XSS/"/>
+    
+      <category term="Javascript" scheme="http://ikaros.club/tags/Javascript/"/>
+    
+      <category term="编程" scheme="http://ikaros.club/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Alfred-创建适合自己的workflow]]></title>
+    <link href="http://ikaros.club/2014/12/02/Alfred-workflow/"/>
+    <id>http://ikaros.club/2014/12/02/Alfred-workflow/</id>
+    <published>2014-12-02T01:19:13.000Z</published>
+    <updated>2014-12-02T04:55:28.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="Alfred">Alfred</h1>
+<p>传说中的mac神器，各种快捷启动，提高效率(不是偷懒么(╯‵□′)╯︵┻━┻)</p>
+<h1 id="准备工作">准备工作</h1>
+<ul>
+<li>OS X 系统</li>
+<li>Alfred 带 Powerpack</li>
+<li>一门熟悉的语言(PHP,Ruby等等) ps:只要你能设置好，然后在终端直接运行就成</li>
+</ul>
+<h1 id="Workflow的四大部分">Workflow的四大部分</h1>
+<p>借用网上的一张图</p>
+<p><img src="http://pic1.zhimg.com/73ce8363644c5ca09f9ed9a4be704c2c_b.jpg" alt=""></p>
+<p>流程顺序为<code>Tigger</code>-&gt;<code>Input</code>-&gt;<code>Action</code>-&gt;<code>Output</code></p>
+<h2 id="Tiggers">Tiggers</h2>
+<p>系统级的启动快捷键，一般用不到的样子- -</p>
+<h2 id="Input">Input</h2>
+<p>用于获取输入信息<br>Input有三类，下面一一介绍</p>
+<h3 id="Keyword">Keyword</h3>
+<p>顾名思义，关键词。在 Alfred 输入框输入关键词后会触发该 Input。<br>Keyword 后面空格可以接参数。在 Alfred 中 参数有3个选项，必须，可选，没有。<br>参数可以通过{query}在下一个流程中获取</p>
+<h3 id="File_Fitter">File Fitter</h3>
+<p>文件匹配，可以匹配电脑上的文件。文件的路径可以通过{query}在下一流程中获取</p>
+<h3 id="Script_Fitter">Script Fitter</h3>
+<p>可以执行各种脚本，然后通过脚本输出对应的<code>XML</code>就能被 Alfred 正确显示。</p>
+<p>再上一张别人的图。</p>
+<p><img src="http://pic3.zhimg.com/1988c69dbc0f1eef8811af9278cff54c_b.jpg" alt=""></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="pi">&lt;?xml version="1.0"?&gt;</span></div><div class="line"><span class="tag">&lt;<span class="title">items</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="title">item</span> <span class="attribute">uid</span>=<span class="value">"1.1392438279"</span> <span class="attribute">arg</span>=<span class="value">"&#x5DE5;&#x4F5C;&#x6D41; ['w&#x259;:k,fl&#x259;u]"</span> <span class="attribute">valid</span>=<span class="value">"yes"</span> <span class="attribute">autocomplete</span>=<span class="value">""</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="title">title</span>&gt;</span>&#x5DE5;&#x4F5C;&#x6D41; ['w&#x259;:k,fl&#x259;u]<span class="tag">&lt;/<span class="title">title</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="title">subtitle</span>&gt;</span>&#x7FFB;&#x8BD1;&#x7ED3;&#x679C;<span class="tag">&lt;/<span class="title">subtitle</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="title">icon</span>&gt;</span>icon.png<span class="tag">&lt;/<span class="title">icon</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="title">item</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="title">item</span> <span class="attribute">uid</span>=<span class="value">"1.1392438279"</span> <span class="attribute">arg</span>=<span class="value">"n. &#x5DE5;&#x4F5C;&#x6D41;&#xFF0C;&#x5DE5;&#x4F5C;&#x6D41;&#x7A0B;"</span> <span class="attribute">valid</span>=<span class="value">"yes"</span> <span class="attribute">autocomplete</span>=<span class="value">""</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="title">title</span>&gt;</span>n. &#x5DE5;&#x4F5C;&#x6D41;&#xFF0C;&#x5DE5;&#x4F5C;&#x6D41;&#x7A0B;<span class="tag">&lt;/<span class="title">title</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="title">subtitle</span>&gt;</span>&#x7B80;&#x660E;&#x91CA;&#x4E49;<span class="tag">&lt;/<span class="title">subtitle</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="title">icon</span>&gt;</span>icon.png<span class="tag">&lt;/<span class="title">icon</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="title">item</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="title">item</span> <span class="attribute">uid</span>=<span class="value">"2.1392438279"</span> <span class="attribute">arg</span>=<span class="value">"&#x5DE5;&#x4F5C;&#x6D41;, &#x5DE5;&#x4F5C;&#x6D41;&#x6280;&#x672F;, &#x5DE5;&#x4F5C;&#x6D41;&#x7A0B;"</span> <span class="attribute">valid</span>=<span class="value">"yes"</span> <span class="attribute">autocomplete</span>=<span class="value">""</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="title">title</span>&gt;</span>&#x5DE5;&#x4F5C;&#x6D41;, &#x5DE5;&#x4F5C;&#x6D41;&#x6280;&#x672F;, &#x5DE5;&#x4F5C;&#x6D41;&#x7A0B;<span class="tag">&lt;/<span class="title">title</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="title">subtitle</span>&gt;</span>&#x7F51;&#x7EDC;&#x91CA;&#x4E49;&#xFF1A;Workflow<span class="tag">&lt;/<span class="title">subtitle</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="title">icon</span>&gt;</span>icon.png<span class="tag">&lt;/<span class="title">icon</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="title">item</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="title">item</span> <span class="attribute">uid</span>=<span class="value">"3.1392438279"</span> <span class="attribute">arg</span>=<span class="value">"&#x5DE5;&#x4F5C;&#x6D41;&#x7BA1;&#x7406;, &#x6D41;&#x7A0B;&#x7BA1;&#x7406;, &#x5DE5;&#x4F5C;&#x6D41;&#x7A0B;&#x7BA1;&#x7406;"</span> <span class="attribute">valid</span>=<span class="value">"yes"</span> <span class="attribute">autocomplete</span>=<span class="value">""</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="title">title</span>&gt;</span>&#x5DE5;&#x4F5C;&#x6D41;&#x7BA1;&#x7406;, &#x6D41;&#x7A0B;&#x7BA1;&#x7406;, &#x5DE5;&#x4F5C;&#x6D41;&#x7A0B;&#x7BA1;&#x7406;<span class="tag">&lt;/<span class="title">title</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="title">subtitle</span>&gt;</span>&#x7F51;&#x7EDC;&#x91CA;&#x4E49;&#xFF1A;workflow management<span class="tag">&lt;/<span class="title">subtitle</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="title">icon</span>&gt;</span>icon.png<span class="tag">&lt;/<span class="title">icon</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="title">item</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="title">item</span> <span class="attribute">uid</span>=<span class="value">"4.1392438279"</span> <span class="attribute">arg</span>=<span class="value">"&#x5DE5;&#x4F5C;&#x6D41;&#x7A0B;&#x52A8;&#x4F5C;, &#x5DE5;&#x4F5C;&#x6D41;&#x7A0B;&#x64CD;&#x4F5C;, &#x5DE5;&#x4F5C;&#x6D41;&#x64CD;&#x4F5C;"</span> <span class="attribute">valid</span>=<span class="value">"yes"</span> <span class="attribute">autocomplete</span>=<span class="value">""</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="title">title</span>&gt;</span>&#x5DE5;&#x4F5C;&#x6D41;&#x7A0B;&#x52A8;&#x4F5C;, &#x5DE5;&#x4F5C;&#x6D41;&#x7A0B;&#x64CD;&#x4F5C;, &#x5DE5;&#x4F5C;&#x6D41;&#x64CD;&#x4F5C;<span class="tag">&lt;/<span class="title">title</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="title">subtitle</span>&gt;</span>&#x7F51;&#x7EDC;&#x91CA;&#x4E49;&#xFF1A;workflow action<span class="tag">&lt;/<span class="title">subtitle</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="title">icon</span>&gt;</span>icon.png<span class="tag">&lt;/<span class="title">icon</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="title">item</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="title">items</span>&gt;</span></div></pre></td></tr></table></figure>
+
+<p>这是上面图的 XML 格式,对照图片，XML 各个的项的意义一幕了然。<br>就多说一个<code>arg</code>属性能被下一流程的{query}获取</p>
+<h2 id="Action">Action</h2>
+<p>这个选项有点多。基本自己看一下就能明白。其中最自由的当然是 <code>Run Script</code>了,只要代码写的好，没有事情不好搞。</p>
+<h2 id="Output">Output</h2>
+<p>最后了，顾名思义就是输出。<br>输出有以下几类</p>
+<ul>
+<li>Post Notification(可以调用水果的通知中心来显示提示)</li>
+<li>Large Type (大字报，试了就知道- -)</li>
+<li>Copy to Clipboard(复制到剪贴板，你懂得)</li>
+<li>Run Script(这个- -，随便你怎么玩了)</li>
+</ul>
+<h1 id="实践_OR_总结">实践 OR 总结</h1>
+<p>最后自己做了一个 workflow 。主要用来快速用 sublime 打开文件夹或者文件。<br>一个 File Fitter 的 Input<br>一个 Run Script 的 Action<br>Script 如下,类型是<code>bash</code>哟</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">open <span class="operator">-a</span> /Applications/Sublime\ Text.app {query}</div></pre></td></tr></table></figure>
+
+<p>总之，做的不一定要多复杂多叼，关键是能让自给高(tou)效(lan)。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="Alfred">Alfred</h1>
+<p>传说中的mac神器，各种快捷启动，提高效率(不是偷懒么(╯‵□′)╯︵┻━┻)</p>
+<h1 id="准备工作">准备工作</h1>
+<ul>
+<li>OS X 系统</li>
+<li>Alfred 带 Powerp]]>
+    </summary>
+    
+      <category term="OS X" scheme="http://ikaros.club/tags/OS-X/"/>
+    
+      <category term="编程" scheme="http://ikaros.club/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[用 Gulp 发布 GitBook 到 GitHub Pages]]></title>
+    <link href="http://ikaros.club/2014/11/22/gitbook-publish-with-gulp/"/>
+    <id>http://ikaros.club/2014/11/22/gitbook-publish-with-gulp/</id>
+    <published>2014-11-22T11:45:05.000Z</published>
+    <updated>2014-11-23T05:35:55.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="需要准备的家伙">需要准备的家伙</h1>
+<ul>
+<li>Gulp </li>
+<li>GitBook</li>
+</ul>
+<p>简单介绍下这两个家伙</p>
+<h2 id="Gulp">Gulp</h2>
+<p>Fractal 公司积极参与了数个流行 Node.js 模块的开发，它最近发布了一个新的构建系统 Gulp，希望能够取代 Grunt，成为最流行的 JavaScript 任务运行器。</p>
+<p>根据 Gulp 的文档，它努力实现的主要特性是：</p>
+<ul>
+<li>易于使用：采用代码优于配置策略，Gulp 让简单的事情继续简单，复杂的任务变得可管理。</li>
+<li>高效：通过利用 Node.js 强大的流，不需要往磁盘写中间文件，可以更快地完成构建。</li>
+<li>高质量：Gulp严格的插件指导方针，确保插件简单并且按你期望的方式工作。</li>
+<li>易于学习：通过把API降到最少，你能在很短的时间内学会 Gulp 。构建工作就像你设想的一样：是一系列流管道。</li>
+</ul>
+<h2 id="GitBook">GitBook</h2>
+<p>GitBook 是一个命令行工具（Node.js库），我们可以借用该工具使用 Github/Git 和 Markdown 来制作精美的图书。</p>
+<h1 id="那么问题来了">那么问题来了</h1>
+<p>重点不是介绍上面那两个东西，重点是怎么偷懒。由于我把 GitBook 生成的静态站点托管到了 GitHub Pages 上，每次修改 Markdown 的文件后，重新生成新的静态页后，有要自己各种操作把静态页传上去。对于爱偷懒的家伙来说，每次重复相同的步骤太苦逼了。于是研究了下决定用 Gulp 来帮我脱离苦海。</p>
+<h1 id="Gulp_任务编写">Gulp 任务编写</h1>
+<p>安装Gulp和Gulp-gh-pages插件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ npm install gulp</div><div class="line">$ npm install gulp-gh-pages</div></pre></td></tr></table></figure>
+
+<p>插件用于推送内容到 Github 上 repo 的 gh-pages 分支<br>下面直接上任务定义文件<code>gulpfile.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">"gulp"</span>),</div><div class="line">  deploy = <span class="built_in">require</span>(<span class="string">"gulp-gh-pages"</span>);</div><div class="line"></div><div class="line">gulp.task(<span class="string">'publish'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{</div><div class="line">  gulp.src(<span class="string">"_book/\*\*/\*.\*"</span>)</div><div class="line">    .pipe(deploy({</div><div class="line">      remoteUrl: <span class="string">"git@github.com:luicfer/XXXX.git"</span></div><div class="line">    }))</div><div class="line">    .on(<span class="string">"error"</span>, <span class="function"><span class="keyword">function</span><span class="params">(err)</span></span>{</div><div class="line">      <span class="built_in">console</span>.log(err)</div><div class="line">    })</div><div class="line">});</div></pre></td></tr></table></figure>
+
+<p>有了这个之后就能直接用<code>gulp publish</code>直接发布到对应仓库的 GitHub pages 上了，哦也。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="需要准备的家伙">需要准备的家伙</h1>
+<ul>
+<li>Gulp </li>
+<li>GitBook</li>
+</ul>
+<p>简单介绍下这两个家伙</p>
+<h2 id="Gulp">Gulp</h2>
+<p>Fractal 公司积极参与了数个流行 No]]>
+    </summary>
+    
+      <category term="Gulp" scheme="http://ikaros.club/tags/Gulp/"/>
+    
+      <category term="GitBook" scheme="http://ikaros.club/tags/GitBook/"/>
+    
+      <category term="编程" scheme="http://ikaros.club/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[用 Composer 管理依赖]]></title>
+    <link href="http://ikaros.club/2014/11/13/composer/"/>
+    <id>http://ikaros.club/2014/11/13/composer/</id>
+    <published>2014-11-13T06:40:05.000Z</published>
+    <updated>2014-11-13T08:26:48.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="写在最前面">写在最前面</h1>
+<p>这篇博客命途多舛，写完之后没保存，然后还被我把只有标题的发上去了，重写估计会比原文短(ノ｀Д)ノ</p>
+<h1 id="起因">起因</h1>
+<p>用了 Node.js 的 NPM 管理依赖后觉得 PHP 管理依赖太渣了，然后发现了 Composer，感觉和 NPM 差不多，感觉很爽利，就用了。(这段字数估计只有原来1/10，果然原来废话太多了)</p>
+<h1 id="Composer">Composer</h1>
+<p><a href="http://www.phpcomposer.com/" target="_blank" rel="external">中文网传送门</a><br>里面有文档安装教程什么的。</p>
+<h2 id="安装">安装</h2>
+<p>linux 下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl <span class="operator">-s</span>S https://getcomposer.org/installer | php -- --install-dir=bin</div></pre></td></tr></table></figure>
+
+<p>放到 bin 目录 或者在环境变量的目录里，这样在哪里都可以用命令。<br>还有安装前确保你装了<code>PHP</code></p>
+<h2 id="安装依赖">安装依赖</h2>
+<ol>
+<li>用<code>composer init</code>命令</li>
+<li>自己动手编辑<code>composer.json</code></li>
+</ol>
+<p>方案1，命令会引导你一步步输你项目名字，作者，licence，依赖之类的东西，都完事之后他会帮你把依赖下载装上<br>方案2的话，请自己按照特定json格式编辑好<code>composer.json</code>文件，然后在命令行运行一下<code>composer install</code>就好了和 Node.js 的 NPM 是一个道理。<br>所有依赖在<code>vendor</code>目录下</p>
+<h2 id="使用">使用</h2>
+<p>大 Node.js npm install 之后只要require一下就好了就可以使用模块了.<br>Composer 也是一样<br>在应用的PHP入口文件添加下面代码，告诉 PHP 使用 Composer 自动加载器加载项目的依赖库：</p>
+<figure class="highlight PHP"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="preprocessor">&lt;?php</span></div><div class="line"><span class="keyword">require_once</span>(<span class="string">'vendor/autoload.php'</span>);</div></pre></td></tr></table></figure>
+
+<h1 id="最后">最后</h1>
+<p>Composer 对于 PHP 和 NPM 对于 Node.js 相比普及率不够啊。<br>友情提示看到 GitHub PHP 项目里面的 README 没有说支持 Composer，最好再看一下源码里面有没有<code>composer.json</code>文件。我就被坑过，经验之谈。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="写在最前面">写在最前面</h1>
+<p>这篇博客命途多舛，写完之后没保存，然后还被我把只有标题的发上去了，重写估计会比原文短(ノ｀Д)ノ</p>
+<h1 id="起因">起因</h1>
+<p>用了 Node.js 的 NPM 管理依赖后觉得 PHP 管理依赖太渣]]>
+    </summary>
+    
+      <category term="PHP" scheme="http://ikaros.club/tags/PHP/"/>
+    
+      <category term="编程" scheme="http://ikaros.club/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Git系列-WebHook-简单自动部署]]></title>
+    <link href="http://ikaros.club/2014/10/24/gitlab-webhook/"/>
+    <id>http://ikaros.club/2014/10/24/gitlab-webhook/</id>
+    <published>2014-10-24T05:41:56.000Z</published>
+    <updated>2014-10-24T10:18:00.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="什么是_WebHook">什么是 WebHook</h1>
+<p>Git 本身支持 Hook 可以在发生特定的事件的时候执行特定的脚本。<br>这些 Hook 可以在 <code>.git</code> 目录下面的 <code>hooks</code> 目录下找到。<br>那么像 GitHub 这样的地方,我们无法直接接触到存放版本库的地方要怎么办呢？<br>这时候就要靠 GitHub 提供的 WebHook 功能了。 WebHook 和 Git 本身的 Hook 一样在特定时候触发，然后通过 HTTP 推送自己的事件的特定信息到指定的地址。这样就可以通过 GitHub 推送的特定信息来执行你的各种脚本或者什么什么的了。<br>至于 WebHook 推送的信息格式，因为不同的地方有不同的事件有不同的格式<br>下面附上 GitHub 的 <a href="https://developer.github.com/webhooks/" target="_blank" rel="external">WebHook</a> 文档</p>
+<h1 id="WebHook_自动更新实践">WebHook 自动更新实践</h1>
+<ul>
+<li>版本库是 GitLab</li>
+<li>WebHook 的监听通过 Node.js 进行</li>
+</ul>
+<p>为了不重复造轮子,我在 GitHub 上找了一个 <a href="https://github.com/rolfn/node-gitlab-hook" target="_blank" rel="external">node-gitlab-hook</a> 的项目<br>不过后来没有采用原版，而是在这基础上做了自己的修改。<br>因为原版在触发非 PUSH 事件的时候 属性无法读取会导致程序 crash</p>
+<h2 id="起步-安装_gitlabhook">起步-安装 gitlabhook</h2>
+<p><code>package.json</code>依赖</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">{</div><div class="line">  "dependencies:"{</div><div class="line">    "gitlabhook": "git+https://github.com/luicfer/node-gitlab-hook.git#f22eaefb2597387b9b8655bd8b430d45add0e018"</div><div class="line">  }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>然后</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install</div></pre></td></tr></table></figure>
+
+<h2 id="入口文件">入口文件</h2>
+<p>程序运行的入口<code>gitlabhook.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">#!<span class="regexp">/usr/</span>bin/env node</div><div class="line"></div><div class="line"><span class="keyword">var</span> util =  <span class="built_in">require</span>(<span class="string">'util'</span>);</div><div class="line"></div><div class="line"><span class="keyword">var</span> PORT = <span class="number">3420</span>;</div><div class="line"></div><div class="line"><span class="keyword">var</span> logger = {</div><div class="line">  info:  <span class="built_in">console</span>.log,</div><div class="line">  error: <span class="built_in">console</span>.log</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keyword">var</span> glh = {</div><div class="line">  port: PORT,</div><div class="line">  host: <span class="string">'0.0.0.0'</span>,</div><div class="line">  logger: logger,</div><div class="line">  configPathes:<span class="string">'./'</span>,</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keyword">var</span> server = <span class="built_in">require</span>(<span class="string">'gitlabhook'</span>)(glh);</div><div class="line"></div><div class="line">server.listen();</div><div class="line"><span class="keyword">if</span> (server.server) logger.info(<span class="string">'webhook server listen (%d)\n'</span>, PORT);</div></pre></td></tr></table></figure>
+
+<p>上面的监听端口啊，日志上面的看自己的需求配置吧。</p>
+<h2 id="配置文件">配置文件</h2>
+<p>上面设置了配置文件的路径为当前目录下<br>所以在当前目录下创建一个文件<code>gitlabhook.conf</code><br>配置文件写法为</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">{</div><div class="line">	"<span class="attribute">tasks</span>":<span class="value">{</span></div><div class="line">    	"<span class="attribute">repo1</span>":<span class="value"><span class="string">"cmd1"</span></span>,</div><div class="line">        "<span class="attribute">repo2</span>":<span class="value"><span class="string">"cmd2"</span></span>,</div><div class="line">        "<span class="attribute">*</span>":<span class="value"><span class="string">"cmd-default"</span></span></div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>repo1 是仓库的名称 cmd1 是你要执行的 shell<br>默认使用 bin/sh 来执行命令，如果你要修改其他的也是可以的<br>范本<code>shell</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">cd</span> /xx/xx/xx</div><div class="line">$ git checkout xxxx</div><div class="line">$ git pull origin xxxx &gt;&gt; /xx/xx/xx/log/xx.log</div></pre></td></tr></table></figure>
+
+<p>然后指好对应版本的命令路径就好了</p>
+<h2 id="开始运行">开始运行</h2>
+<p>程序使用 pm2 做守护进程以便挂了可以重启</p>
+<h3 id="安装_pm2">安装 pm2</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install -g pm2</div></pre></td></tr></table></figure>
+
+<h3 id="使用_pm2_运行程序">使用 pm2 运行程序</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ pm2 start gitlabhook.js</div></pre></td></tr></table></figure>
+
+<p><img src="http://lucifer.b0.upaiyun.com/gitlab-webhook/1.jpg" alt=""></p>
+<p>当当当，看到了绿色的 online 了。程序已经运行起来了</p>
+<h1 id="关于使用修改版本">关于使用修改版本</h1>
+<p>原作者的代码第113行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> lastCommit = data.commits[data.commits.length-<span class="number">1</span>];</div><div class="line">	  <span class="keyword">var</span> map = {</div><div class="line">	    <span class="string">'%r'</span>: repo,</div><div class="line">	    <span class="string">'%g'</span>: data.repository.url,</div><div class="line">	    <span class="string">'%h'</span>: httpUrl,</div><div class="line">	    <span class="string">'%u'</span>: data.user_name,</div><div class="line">	    <span class="string">'%b'</span>: data.ref,</div><div class="line">	    <span class="string">'%i'</span>: lastCommit.id,</div><div class="line">	    <span class="string">'%t'</span>: lastCommit.timestamp,</div><div class="line">	    <span class="string">'%m'</span>: lastCommit.message,</div><div class="line">	    <span class="string">'%s'</span>: address</div><div class="line">	  };</div></pre></td></tr></table></figure>
+
+<p>由于 GitLab 的 WebHook 除了推送事件外，其他事件推送的信息不包含提交信息，导致 <code>lastCommit</code>变量为空。 <code>map</code> 变量中读取 <code>lastCommit</code> 的属性出现错误导致程序崩溃。<br>变量 <code>map</code> 用于对命令脚本中的 <code>%r</code> 等字符进行替换 可以达到一个脚本多个库使用的目的。<br>解决的办法对 <code>lastCommit</code> 进行了判断如果不存在 则设置 <code>map</code> 为 <code>false</code><br>当然这是一个比较偷懒的解决方案。正确的打开方式应该是针对不同类型 WebHook 推送的不同内容。设置不同的<code>map</code>以便某些需要的人通过<code>map</code>来对自己的脚本进行正则替换，实现一个脚本用在多个库上。我不是某些需要的人就直接来了个<code>false</code>23333<br>总之因为属性无法读取导致 crash 的问题算是解决了。噢耶。<br>这样就算是实现了通过 WebHook 进行自动部署了。当然根据你的 shell 不同可以实现不同的功能。什么给你发个邮件提醒啊，巴拉巴拉之类的。只要想的到，代码写的出来就行2333。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="什么是_WebHook">什么是 WebHook</h1>
+<p>Git 本身支持 Hook 可以在发生特定的事件的时候执行特定的脚本。<br>这些 Hook 可以在 <code>.git</code> 目录下面的 <code>hooks</code> 目录下找到]]>
+    </summary>
+    
+      <category term="Git" scheme="http://ikaros.club/tags/Git/"/>
+    
+      <category term="WebHook" scheme="http://ikaros.club/tags/WebHook/"/>
+    
+      <category term="编程" scheme="http://ikaros.club/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[把代码从 SVN 迁移到 Git]]></title>
+    <link href="http://ikaros.club/2014/10/19/from-svn-to-git/"/>
+    <id>http://ikaros.club/2014/10/19/from-svn-to-git/</id>
+    <published>2014-10-19T14:17:00.000Z</published>
+    <updated>2014-10-19T14:51:56.000Z</updated>
+    <content type="html"><![CDATA[<p>把 SVN 的代码迁移到 Git 上，同时保留提交记录等。<br>由于 SVN 的分支比起 Git 弱爆了，SVN 没有使用，迁移起来省事很多。</p>
+<h1 id="准备">准备</h1>
+<ul>
+<li>Git版本库存放 使用了 GitLab</li>
+<li>迁移工具(Git-SVN)<br>Ubuntu 下安装 Git-SVN</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">sudo</span> apt-get install git-svn</div></pre></td></tr></table></figure>
+
+<p>GitLab 安装见<a href="http://gitlab.com" target="_blank" rel="external">官网</a></p>
+<h1 id="进行">进行</h1>
+<ol>
+<li>制作 authors.txt ,内容为所有提交者的映射表</li>
+</ol>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="variable">xxx=</span>yyy</div><div class="line"><span class="variable">aaa=</span>bbb</div></pre></td></tr></table></figure>
+
+<p>如果你 SVN 的提交者和 GitLab 上一样可以省去这一步骤。当然就算不一样也可以省了，如果你不在意的话。</p>
+<ol>
+<li>从 SVN 版本库中检出项目并转换成 Git 的格式</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git svn clone svn://xxx.xxx.xxx.xxx/Project --authors-file=authors.txt</div></pre></td></tr></table></figure>
+
+<p>这一步花费了我最多的时间。毕竟4000多个版本的库一个个版本每一个变化转换过来还是蛮费时间的。如果不需要历史版本的话(╯‵□′)╯︵┻━┻你用 Git-SVN 干嘛，直接 SVN检出最新的版本，然后用 Git  PUSH 到新库就好了。如果你之需要一部分可以通过 -r 参数来控制导出的版本数。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git svn clone svn://xxx.xxx.xxx.xxx/Project --authors-file=authors.txt -r xxx:head</div></pre></td></tr></table></figure>
+
+<p>上面是从 xxx 号版本到最新版本</p>
+<ol>
+<li>把转换好的库推送到 GitLab 上<br>这个就简单了</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git remote add origin git@xxx.xxx.xxx:Project.git</div><div class="line">git push -u origin master</div></pre></td></tr></table></figure>
+
+<p>好了，你的代码已经由 SVN 管理变成 Git 管理了。让我们用很酷的 Git 特性吧。<br>后面会通过 GitLab 的 WebHook 对 代码实现自动部署。如 Master 分支上的 Tag 部署到生产环境， Develop 分支部署到测试环境。求 10086 个赞。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>把 SVN 的代码迁移到 Git 上，同时保留提交记录等。<br>由于 SVN 的分支比起 Git 弱爆了，SVN 没有使用，迁移起来省事很多。</p>
+<h1 id="准备">准备</h1>
+<ul>
+<li>Git版本库存放 使用了 GitLab</li>
+<li>迁移]]>
+    </summary>
+    
+      <category term="Git" scheme="http://ikaros.club/tags/Git/"/>
+    
+      <category term="编程" scheme="http://ikaros.club/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[MySql 优化]]></title>
+    <link href="http://ikaros.club/2014/10/15/mysql-optimization/"/>
+    <id>http://ikaros.club/2014/10/15/mysql-optimization/</id>
+    <published>2014-10-15T04:52:05.000Z</published>
+    <updated>2014-10-16T03:22:43.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="优化宝典">优化宝典</h1>
+<p>唔，网上看到比较好的优化建议吧。总共有20条。直接放出<a href="http://coolshell.cn/articles/1846.html" target="_blank" rel="external">传送门</a></p>
+<h1 id="实战">实战</h1>
+<p>算是一种日志记录的库，只有一张日志的表是大表，测试的时候有130万条数据，其他的都是小表，几百几千条，而且不会加了。</p>
+<h2 id="索引">索引</h2>
+<p>发现速度比较慢的时候是日志开启了一段时间，积累了一定数据的时候，刚开始数据小，服务器叼，没什么感想哈哈。话说发现比较慢了之后，我看了下表的结构，发现没有索引(╯‵□′)╯︵┻━┻<br>先把索引做上O__O”<br>做索引前</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="operator"><span class="keyword">EXPLAIN</span> <span class="keyword">SELECT</span></span></div><div class="line">	*</div><div class="line"><span class="keyword">FROM</span></div><div class="line">	access_log</div><div class="line"><span class="keyword">WHERE</span></div><div class="line">	site_id = <span class="number">1</span></div><div class="line"><span class="keyword">AND</span> user_id = <span class="number">1</span></div></pre></td></tr></table></figure>
+
+<p><img src="http://lucifer.b0.upaiyun.com/mysql-optimization/index-1.jpg" alt=""></p>
+<p>扫描了全表效率可想而知。在我的渣本上用了 33.919 S<br>分析了 Sql 后发现 where 条件都有 站点 Id 和用户 Id 部分会加上时间。所以决定对3个字段做组合索引 （用户 Id,站点 Id,时间戳）<br>同样一句 Sql 索引后</p>
+<p><img src="http://lucifer.b0.upaiyun.com/mysql-optimization/index-2.jpg" alt=""></p>
+<p>时间变为了 0.021 S，(๑ŐдŐ)b<br>当然还可以使用多行单列索引。由于本文中查询条件必有用户 Id,站点 Id 可能会有时间戳所以3个的单列索引效率不如组合索引。<br>单列索引上面的 Sql 执行时间为 0.602 S。</p>
+<h2 id="结构紧凑,垂直分割">结构紧凑,垂直分割</h2>
+<p>如果说索引可以减少扫描的行数，那么结构紧凑可以减少扫描每一行的时间。我觉得垂直分割应该也算是结构紧凑的一种做法，把不常用的数据分到另外的表里面需要的时候才关联。当然如果你的硬盘转速达到光速，请无视我。<br>上面的日志表记录了地区的 Id 还有地区的名字,还有其他巴拉巴拉类似的。那些如地区名字的字段是很大一波冗余数据。只在一个地方获取列表的时候直接用到了。列表一般只有几条到几十条数据。关联下问题不大。<br>删除那些列以后执行上面的 Sql 时间减少了一半 只需 15 S</p>
+<h1 id="总结">总结</h1>
+<p>Sql 优化学问多，参考宝典 20 条建议能解决大部分问题（当然这个是 MySql）。如果还解决不了，你确定你还要 Sql？ 你不上 Redis , Memcached什么的。 你确定不集群，不读写分离什么的？<br>好吧，就这样，再见。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="优化宝典">优化宝典</h1>
+<p>唔，网上看到比较好的优化建议吧。总共有20条。直接放出<a href="http://coolshell.cn/articles/1846.html" target="_blank" rel="external">传送门</a]]>
+    </summary>
+    
+      <category term="MySql" scheme="http://ikaros.club/tags/MySql/"/>
+    
+      <category term="编程" scheme="http://ikaros.club/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[AhoCorasick]]></title>
+    <link href="http://ikaros.club/2014/10/07/AhoCorasick/"/>
+    <id>http://ikaros.club/2014/10/07/AhoCorasick/</id>
+    <published>2014-10-07T13:20:52.000Z</published>
+    <updated>2014-10-07T14:10:16.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="起因">起因</h1>
+<p>总有人在网站里发一些不河蟹的东西。所以需要对里面的文本进行关键词过滤。之前是对字典的每一个词进行匹配。4000行的字典效率我就不说了- -。好歹曾经撸过 ACM 对于这个关键词匹配我自然想到了 AC 自动机，所以我就主动承包了这个任务。</p>
+<h1 id="简介">简介</h1>
+<p>首先简要介绍一下 AC 自动机：Aho-Corasick automation，该算法在1975年产生于贝尔实验室，是著名的多模匹配算法之一。一个常见的例子就是给出 n 个单词，再给出一段包含 m 个字符的文章，让你找出有多少个单词在文章里出现过。要搞懂 AC 自动机，先得有模式树（字典树） Trie 和 KMP 模式匹配算法的基础知识。 AC 自动机算法分为3步：构造一棵 Trie 树，构造失败指针和模式匹配过程。<br>关于 数据结构 <a href="http://baike.baidu.com/view/2759664.htm?fr=aladdin" target="_blank" rel="external">Trie</a> 和 <a href="http://baike.baidu.com/view/659777.htm?fr=aladdin" target="_blank" rel="external">KMP</a> 的传送门 →_→</p>
+<h1 id="实施">实施</h1>
+<p>为什么用 PHP 来实现，因为网站就是 PHP 的。虽然用 C/C++ 速度会更快的说,其实也不差这一点点速度了。</p>
+<h2 id="编码转换">编码转换</h2>
+<p>PHP 字符编码多使用 UTF8 ，这种编码方式是一个变长度的编码，所以需要转换。我的做法是把字符串按照一个个字符分割成数组。实现如下。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">str_split_utf8</span><span class="params">(<span class="variable">$str</span>)</span></span>{</div><div class="line">    <span class="variable">$split</span>=<span class="number">1</span>;</div><div class="line">    <span class="variable">$array</span> = <span class="keyword">array</span>();</div><div class="line">    <span class="keyword">for</span>(<span class="variable">$i</span>=<span class="number">0</span>; <span class="variable">$i</span>&lt;strlen(<span class="variable">$str</span>); ){</div><div class="line">        <span class="variable">$value</span> = ord(<span class="variable">$str</span>[<span class="variable">$i</span>]);</div><div class="line">        <span class="keyword">if</span>(<span class="variable">$value</span> &gt; <span class="number">127</span>){</div><div class="line">            <span class="keyword">if</span>(<span class="variable">$value</span> &gt;= <span class="number">192</span> && <span class="variable">$value</span> &lt;= <span class="number">223</span>)</div><div class="line">                <span class="variable">$split</span>=<span class="number">2</span>;</div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(<span class="variable">$value</span> &gt;= <span class="number">224</span> && <span class="variable">$value</span> &lt;= <span class="number">239</span>)</div><div class="line">                <span class="variable">$split</span>=<span class="number">3</span>;</div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(<span class="variable">$value</span> &gt;= <span class="number">240</span> && <span class="variable">$value</span> &lt;= <span class="number">247</span>)</div><div class="line">                <span class="variable">$split</span>=<span class="number">4</span>;</div><div class="line">        }<span class="keyword">else</span>{</div><div class="line">            <span class="variable">$split</span>=<span class="number">1</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="variable">$key</span> = <span class="keyword">NULL</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="variable">$j</span> = <span class="number">0</span>; <span class="variable">$j</span>&lt;<span class="variable">$split</span>; <span class="variable">$j</span>++, <span class="variable">$i</span>++ ) {</div><div class="line">            <span class="variable">$key</span> .= <span class="variable">$str</span>[<span class="variable">$i</span>];</div><div class="line">        }</div><div class="line">        array_push( <span class="variable">$array</span>, <span class="variable">$key</span> );</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> <span class="variable">$array</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h2 id="Trie_节点定义">Trie 节点定义</h2>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">State</span> </span>{</div><div class="line">    <span class="keyword">private</span> <span class="variable">$depth</span>;<span class="comment">// int类型，表示每一个状态对象的深度，从0开始表示</span></div><div class="line">    <span class="keyword">private</span> <span class="variable">$edgeList</span>;<span class="comment">// 类似于列表，用于包含该状态下所包含的下一级所有State对象</span></div><div class="line">    <span class="keyword">private</span> <span class="variable">$fail</span>;<span class="comment">// State对象，表示状态对象失效之后要跳转的地方</span></div><div class="line">    <span class="keyword">private</span> <span class="variable">$outputs</span>;<span class="comment">// array对象，存放某一状态下可以输出的内容</span></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 *<span class="phpdoc"> @function</span> State 构造函数</div><div class="line">	 *<span class="phpdoc"> @param</span> int depth 状态所处的深度</div><div class="line">	 *<span class="phpdoc"> @return</span></div><div class="line">	 */</div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">State</span><span class="params">(<span class="variable">$depth</span>)</span> </span>{</div><div class="line">		<span class="variable">$this</span><span class="variable">-&gt;depth</span> = <span class="variable">$depth</span>;</div><div class="line">		<span class="comment">//$this-&gt;edgeList = new SparseEdgeList();</span></div><div class="line">		<span class="variable">$this</span><span class="variable">-&gt;edgeList</span> = <span class="keyword">new</span> DenseEdgeList();</div><div class="line">		<span class="variable">$this</span><span class="variable">-&gt;fail</span> = <span class="keyword">NULL</span>;</div><div class="line">		<span class="variable">$this</span><span class="variable">-&gt;outputs</span> = <span class="keyword">array</span>();</div><div class="line">    }</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 *@function extend 添加单个搜索词</div><div class="line">	 *@param char character 单个搜索词，或者一个字母、数字、或者一个汉字等</div><div class="line">	 *@return State</div><div class="line">	**/</div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">extend</span><span class="params">(<span class="variable">$character</span>)</span> </span>{</div><div class="line">		<span class="keyword">if</span> (!is_null(<span class="variable">$this</span><span class="variable">-&gt;edgeList</span><span class="variable">-&gt;get</span>(<span class="variable">$character</span>))){</div><div class="line">		    <span class="keyword">return</span> <span class="variable">$this</span><span class="variable">-&gt;edgeList</span><span class="variable">-&gt;get</span>(<span class="variable">$character</span>);</div><div class="line">		}</div><div class="line"></div><div class="line">		<span class="variable">$nextState</span> = <span class="keyword">new</span> State(<span class="variable">$this</span><span class="variable">-&gt;depth</span>+<span class="number">1</span>);</div><div class="line">		<span class="variable">$this</span><span class="variable">-&gt;edgeList</span><span class="variable">-&gt;put</span>(<span class="variable">$character</span>, <span class="variable">$nextState</span>);</div><div class="line">		<span class="keyword">return</span> <span class="variable">$nextState</span>;</div><div class="line">    }</div><div class="line">	<span class="comment">/**</span></div><div class="line">	 *@function extendAll 添加搜索词</div><div class="line">	 *@param array contents 搜索词数组</div><div class="line">	 *@return State</div><div class="line">	**/</div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">extendAll</span><span class="params">(<span class="variable">$contents</span>)</span> </span>{</div><div class="line">		<span class="variable">$state</span> = <span class="variable">$this</span>;</div><div class="line">		<span class="variable">$cnt</span> = count(<span class="variable">$contents</span>);</div><div class="line">		<span class="keyword">for</span>(<span class="variable">$i</span>=<span class="number">0</span>; <span class="variable">$i</span>&lt;<span class="variable">$cnt</span>; <span class="variable">$i</span>++) {</div><div class="line">			<span class="comment">// 如果搜索的关键词存在，则直接返回该 关键词所处的State对象，否则添加该关键词</span></div><div class="line">		    <span class="keyword">if</span>(!is_null(<span class="variable">$state</span><span class="variable">-&gt;edgeList</span><span class="variable">-&gt;get</span>(<span class="variable">$contents</span>[<span class="variable">$i</span>]))){</div><div class="line">				<span class="variable">$state</span> = <span class="variable">$state</span><span class="variable">-&gt;edgeList</span><span class="variable">-&gt;get</span>(<span class="variable">$contents</span>[<span class="variable">$i</span>]);</div><div class="line">		    }<span class="keyword">else</span>{</div><div class="line">				<span class="variable">$state</span> = <span class="variable">$state</span><span class="variable">-&gt;extend</span>(<span class="variable">$contents</span>[<span class="variable">$i</span>]);</div><div class="line">			}</div><div class="line">		}</div><div class="line">		<span class="keyword">return</span> <span class="variable">$state</span>;</div><div class="line">    }</div><div class="line">	<span class="comment">/**</span></div><div class="line">	 *<span class="phpdoc"> @function</span> 计算搜索词的总长度</div><div class="line">	 *<span class="phpdoc"> @param</span></div><div class="line">	 *<span class="phpdoc"> @return</span> int</div><div class="line">	 */</div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">size</span><span class="params">()</span> </span>{</div><div class="line">		<span class="variable">$keys</span> = <span class="variable">$this</span><span class="variable">-&gt;edgeList</span><span class="variable">-&gt;keys</span>();</div><div class="line">		<span class="variable">$result</span> = <span class="number">1</span>;</div><div class="line">		<span class="variable">$length</span> = count(<span class="variable">$keys</span>);</div><div class="line">		<span class="keyword">for</span> (<span class="variable">$i</span>=<span class="number">0</span>; <span class="variable">$i</span>&lt;<span class="variable">$length</span>; <span class="variable">$i</span>++){</div><div class="line">		    <span class="variable">$result</span> += <span class="variable">$this</span><span class="variable">-&gt;edgeList</span><span class="variable">-&gt;get</span>(<span class="variable">$keys</span>[<span class="variable">$i</span>])<span class="variable">-&gt;size</span>();</div><div class="line">		}</div><div class="line">		<span class="keyword">return</span> <span class="variable">$result</span>;</div><div class="line">    }</div><div class="line">	<span class="comment">/**</span></div><div class="line">	 *<span class="phpdoc"> @function</span> 获取单个关键词所处的State对象</div><div class="line">	 *<span class="phpdoc"> @param</span> char character</div><div class="line">	 *<span class="phpdoc"> @return</span> State</div><div class="line">	 */</div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">get</span><span class="params">(<span class="variable">$character</span>)</span> </span>{</div><div class="line">    	<span class="variable">$res</span> = <span class="variable">$this</span><span class="variable">-&gt;edgeList</span><span class="variable">-&gt;get</span>(<span class="variable">$character</span>);</div><div class="line">    	<span class="keyword">return</span> <span class="variable">$res</span>;</div><div class="line">    }</div><div class="line">	<span class="comment">/**</span></div><div class="line">	 *<span class="phpdoc"> @function</span> 向State对象中添加下一级的搜索词及对应的State值</div><div class="line">	 *<span class="phpdoc"> @param</span> char character</div><div class="line">	 *<span class="phpdoc"> @param</span> State state</div><div class="line">	 *<span class="phpdoc"> @return</span></div><div class="line">	 */</div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">put</span><span class="params">(<span class="variable">$character</span>, <span class="variable">$state</span>)</span> </span>{</div><div class="line">		<span class="variable">$this</span><span class="variable">-&gt;edgeList</span><span class="variable">-&gt;put</span>(<span class="variable">$character</span>, <span class="variable">$state</span>);</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<h2 id="构建失败指针">构建失败指针</h2>
+<p>构建失败指针的方法为 设这个节点上的字母为 C ，沿着他父亲的失败指针走，直到走到一个节点，他的儿子中也有字母为 C 的节点。然后把当前节点的失败指针指向那个字母也为 C 的儿子。如果一直走到了 root 都没找到，那就把失败指针指向 root 。<br>编程实现的过程中使用了队列，由于 PHP 本身的数组相关的函数就有 array_push (后入=。=) 和 array_shift (前攻(ノ｀Д)ノ)</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">prepareFailTransitions</span><span class="params">()</span> </span>{</div><div class="line">		<span class="variable">$q</span> = <span class="keyword">array</span>();<span class="comment">// 存放第一层级的所有搜索词</span></div><div class="line">		<span class="keyword">foreach</span>(<span class="variable">$this</span><span class="variable">-&gt;arr_keys</span> <span class="keyword">as</span> <span class="variable">$value</span>){</div><div class="line">			<span class="keyword">if</span>(is_null(<span class="variable">$this</span><span class="variable">-&gt;root</span><span class="variable">-&gt;get</span>(<span class="variable">$value</span>))){</div><div class="line">				<span class="comment">// 如果搜索词不存在于第一层级，则添加，并且设置失效值为根节点State对象</span></div><div class="line">				<span class="variable">$this</span><span class="variable">-&gt;root</span><span class="variable">-&gt;put</span>(<span class="variable">$value</span>, <span class="variable">$this</span><span class="variable">-&gt;root</span>);</div><div class="line">			}<span class="keyword">else</span>{</div><div class="line">				<span class="comment">// 设置第一层级的失效值为根节点State对象，并且把搜索词对应的State值添加到$q数组中</span></div><div class="line">				<span class="variable">$this</span><span class="variable">-&gt;root</span><span class="variable">-&gt;get</span>(<span class="variable">$value</span>)<span class="variable">-&gt;setFail</span>(<span class="variable">$this</span><span class="variable">-&gt;root</span>);</div><div class="line">				array_push(<span class="variable">$q</span>, <span class="variable">$this</span><span class="variable">-&gt;root</span><span class="variable">-&gt;get</span>(<span class="variable">$value</span>));</div><div class="line">			}</div><div class="line">		}</div><div class="line">		<span class="comment">// 设置所有State节点的失效值</span></div><div class="line">		<span class="keyword">while</span>(!is_null(<span class="variable">$q</span>)) {</div><div class="line">			<span class="comment">// 将数组$q第一个State值移出该数组，并返回移出的State值</span></div><div class="line">			<span class="variable">$state</span> = array_shift(<span class="variable">$q</span>);</div><div class="line">			<span class="comment">// 如果取出的$state内容为空，则结束循环</span></div><div class="line">			<span class="keyword">if</span>(is_null(<span class="variable">$state</span>)){</div><div class="line">				<span class="keyword">break</span>;</div><div class="line">			}</div><div class="line">			<span class="comment">// 获取$state值对应的下一级所有搜索词</span></div><div class="line">			<span class="variable">$keys</span> = <span class="variable">$state</span><span class="variable">-&gt;keys</span>();</div><div class="line">			<span class="variable">$cnt_keys</span> = count(<span class="variable">$keys</span>);</div><div class="line">			<span class="keyword">for</span>(<span class="variable">$i</span>=<span class="number">0</span>; <span class="variable">$i</span>&lt;<span class="variable">$cnt_keys</span>; <span class="variable">$i</span>++) {</div><div class="line">				<span class="variable">$r</span> = <span class="variable">$state</span>;</div><div class="line">				<span class="variable">$a</span> = <span class="variable">$keys</span>[<span class="variable">$i</span>];</div><div class="line">				<span class="variable">$s</span> = <span class="variable">$r</span><span class="variable">-&gt;get</span>(<span class="variable">$a</span>);</div><div class="line">				array_push(<span class="variable">$q</span>, <span class="variable">$s</span>);</div><div class="line">				<span class="variable">$r</span> = <span class="variable">$r</span><span class="variable">-&gt;getFail</span>();</div><div class="line">				<span class="comment">// 递归查找失效值，直到根节点为止</span></div><div class="line">				<span class="keyword">while</span>(is_null(<span class="variable">$r</span><span class="variable">-&gt;get</span>(<span class="variable">$a</span>))){</div><div class="line">					<span class="variable">$r</span> = <span class="variable">$r</span><span class="variable">-&gt;getFail</span>();</div><div class="line">				}</div><div class="line"></div><div class="line">				<span class="variable">$s</span><span class="variable">-&gt;setFail</span>(<span class="variable">$r</span><span class="variable">-&gt;get</span>(<span class="variable">$a</span>));</div><div class="line">				<span class="variable">$s</span><span class="variable">-&gt;setOutputs</span>(array_unique(array_merge(<span class="variable">$s</span><span class="variable">-&gt;getOutputs</span>(), <span class="variable">$r</span><span class="variable">-&gt;get</span>(<span class="variable">$a</span>)<span class="variable">-&gt;getOutputs</span>())));</div><div class="line">			}</div><div class="line">		}</div><div class="line">	}</div></pre></td></tr></table></figure>
+
+<h2 id="搜索">搜索</h2>
+<p>搜索过程分两种情况：(1)当前字符匹配，表示从当前节点沿着树边有一条路径可以到达目标字符，此时只需沿该路径走向下一个节点继续匹配即可，目标字符串指针移向下个字符继续匹配；(2)当前字符不匹配，则去当前节点失败指针所指向的字符继续匹配，匹配过程随着指针指向root结束。<br>代码就不贴了，感觉贴的有点多- -。</p>
+<h1 id="总结">总结</h1>
+<p>PHP 速度毕竟不如 C/C++ 之流快。不过算法好的话也比之前快很多。而且 PHP 可以使用 C/C++ 来编写拓展来调用，如果用了这个速度还是不能达到要求可以考虑用 C/C++ 做拓展。说道拓展，在撸这个的过程中看到了一个 Double-Array Trie 的拓展。不知道速度比这个如何。等我有时间蛋疼的时候测试下这两个速度的区别。<br>最后放上代码源码地址 <a href="https://github.com/luicfer/AhoCorasick" target="_blank" rel="external">GitHub</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="起因">起因</h1>
+<p>总有人在网站里发一些不河蟹的东西。所以需要对里面的文本进行关键词过滤。之前是对字典的每一个词进行匹配。4000行的字典效率我就不说了- -。好歹曾经撸过 ACM 对于这个关键词匹配我自然想到了 AC 自动机，所以我就主动承包了这个任务]]>
+    </summary>
+    
+      <category term="算法" scheme="http://ikaros.club/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="多模匹配" scheme="http://ikaros.club/tags/%E5%A4%9A%E6%A8%A1%E5%8C%B9%E9%85%8D/"/>
+    
+      <category term="PHP" scheme="http://ikaros.club/tags/PHP/"/>
+    
+      <category term="编程" scheme="http://ikaros.club/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Chrome 浏览器插件制作]]></title>
+    <link href="http://ikaros.club/2014/09/28/chrome-ex/"/>
+    <id>http://ikaros.club/2014/09/28/chrome-ex/</id>
+    <published>2014-09-28T13:04:33.000Z</published>
+    <updated>2014-10-07T13:25:03.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="前言">前言</h1>
+<p>不会偷懒的攻城狮不是好攻城狮。网上下载bt资源的时候经常遇到无良的家伙回复可见种子啊，需要金币才可以下载什么的。真是烦死人(╯‵□′)╯︵┻━┻。<br>但是有时候会看到特征码会贴出来，嘿嘿有了特征码就可以直接加上前缀<code>magnet:?xt=urn:btih:</code>用磁力链的方式直接下载。<br>又但是因为我实在太懒这串东西根本背不下来，每次只能去搜索如何用<strong> 特征码下载 </strong>然后找到这串东西复制过来。<br>为了减少复制搜索的工作，决定做一个chrome小插件来偷懒-。-</p>
+<h1 id="准备工作">准备工作</h1>
+<ul>
+<li>Chrome 浏览器一只</li>
+<li><a href="http://open.chrome.360.cn/extension_dev/overview.html" target="_blank" rel="external">开发者文档</a></li>
+<li>Javascript,CSS,HTML基础知识</li>
+</ul>
+<p>开发者文档的地址是360的，请不要在意，因为他是 Chrome 内核的嘛。</p>
+<h1 id="开始开发">开始开发</h1>
+<p>首先创建一个文件夹用来放代码资源什么的</p>
+<h2 id="创建_Manifest_文件">创建 Manifest 文件</h2>
+<p>在目录里一个文本文件，命名为 manifest.json<br>本插件里面的内容为</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">{</div><div class="line">	"<span class="attribute">manifest_version</span>": <span class="value"><span class="number">2</span></span>,</div><div class="line">	"<span class="attribute">name</span>": <span class="value"><span class="string">"magnet"</span></span>,</div><div class="line">	"<span class="attribute">version</span>": <span class="value"><span class="string">"1.0"</span></span>,</div><div class="line">	"<span class="attribute">description</span>": <span class="value"><span class="string">"特征码转磁力链"</span></span>,</div><div class="line"></div><div class="line">	"<span class="attribute">permissions</span>": <span class="value">[</span></div><div class="line">		<span class="string">"contextMenus"</span></div><div class="line">	] ,</div><div class="line">    "<span class="attribute">icons</span>": <span class="value">{</span></div><div class="line">              "<span class="attribute">128</span>": <span class="value"><span class="string">"magnet.png"</span></span>,</div><div class="line">              "<span class="attribute">16</span>": <span class="value"><span class="string">"magnet.png"</span></span></div><div class="line">         },</div><div class="line"></div><div class="line">    "<span class="attribute">background</span>": <span class="value">{</span></div><div class="line">        "<span class="attribute">scripts</span>": <span class="value">[<span class="string">"main.js"</span>]</span></div><div class="line">      }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>这个文件是插件的配置文件，里面有版本号、描述图标等等的配置。详细的去看→_→<a href="http://open.chrome.360.cn/extension_dev/overview.html" target="_blank" rel="external">文档</a><br>在这个文件中我指定了背景页的脚本为 main.js 接下来就要在这个 js 中实现给特征码加上前缀变成磁力链</p>
+<h2 id="写主要脚本">写主要脚本</h2>
+<p>其实只是 Hello World 级别脚本</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">chrome.contextMenus.create({</div><div class="line">	<span class="string">"title"</span>: <span class="string">"特征码转磁力链"</span>, </div><div class="line">	<span class="string">"contexts"</span>:[<span class="string">"selection"</span>],</div><div class="line">	<span class="string">"onclick"</span>: genericOnClick}</div><div class="line">);</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">genericOnClick</span><span class="params">(info, tab)</span> </span>{</div><div class="line">	<span class="keyword">var</span> magnet = <span class="string">"magnet:?xt=urn:btih:"</span>+info.selectionText;</div><div class="line">  	prompt(<span class="string">""</span>,magnet);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>脚本只有1个函数，加上调用了 Chrome 本身的接口。<br>前面是当浏览器中有文本被选中时右键菜单添加一项名字叫做<strong>特征码转磁力链</strong>的选项，当这个选项被点击的时候，调用函数<code>genericOnClick</code><br>第二个函数就是利用 Chrome 的对象获取选中的文本，并加上那啥的前缀然后输出出来</p>
+<h2 id="Chrome_加载插件">Chrome 加载插件</h2>
+<p><img src="http://lucifer.b0.upaiyun.com/chrome-ex/1.jpg" alt=""></p>
+<p>然后勾选开发者模式后点击<code>加载正在开发的拓展程序</code><br>之后选中当初创建的文件夹，插件就被加载了</p>
+<h1 id="总结">总结</h1>
+<p>施工完毕，放张完工图<br><img src="http://lucifer.b0.upaiyun.com/chrome-ex/2.png" alt=""></p>
+<p>Hello Word 级别的插件就完成了。当然发布什么的，因为没打算发布也就不说了。<br>这个只是入门级别，如果要做一个好插件还是要花费很多精力的。当然一个强大的插件也是能为上网冲浪提供很多便利的。<br>最后说下小怨念。这个东西搞完之后用着爽了一会，后来 Chrome 不允许启用没有在官方商店发布的插件。就就就就没然后了(╯‵□′)╯︵┻━┻</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="前言">前言</h1>
+<p>不会偷懒的攻城狮不是好攻城狮。网上下载bt资源的时候经常遇到无良的家伙回复可见种子啊，需要金币才可以下载什么的。真是烦死人(╯‵□′)╯︵┻━┻。<br>但是有时候会看到特征码会贴出来，嘿嘿有了特征码就可以直接加上前缀<code>ma]]>
+    </summary>
+    
+      <category term="Javascript" scheme="http://ikaros.club/tags/Javascript/"/>
+    
+      <category term="Chrome" scheme="http://ikaros.club/tags/Chrome/"/>
+    
+      <category term="编程" scheme="http://ikaros.club/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[本博客的搭建过程]]></title>
+    <link href="http://ikaros.club/2014/09/24/build-blog-with-hexo/"/>
+    <id>http://ikaros.club/2014/09/24/build-blog-with-hexo/</id>
+    <published>2014-09-24T10:48:59.000Z</published>
+    <updated>2014-09-24T14:22:59.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="准备工作">准备工作</h1>
+<ol>
+<li>GitHub</li>
+<li>Node.js</li>
+<li>Hexo</li>
+</ol>
+<h2 id="GitHub">GitHub</h2>
+<p>先去 <a href="https://github.com/" target="_blank" rel="external">GitHub</a> 注册一个账号并且弄好自己的 <a href="https://pages.github.com/" target="_blank" rel="external">GitHub Pages</a> 当然还有自己的 SSH keys 什么的</p>
+<h2 id="Node-js">Node.js</h2>
+<p>官网传送门 <a href="http://nodejs.org/" target="_blank" rel="external">Node.js</a> 下载安装就不多说什么了</p>
+<h2 id="Hexo">Hexo</h2>
+<p>安装完 Node.js 后在命令行中输入</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install -g hexo</div></pre></td></tr></table></figure>
+
+<p>好了 Hexo 也安装完毕</p>
+<h1 id="Hexo_部署">Hexo 部署</h1>
+<h2 id="Hexo_初始化">Hexo 初始化</h2>
+<p>进入一个空目录</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ hexo init</div><div class="line">$ npm install</div></pre></td></tr></table></figure>
+
+<p>完成后目录结构大致如下</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">.</div><div class="line">├── _config.yml</div><div class="line">├── package.json</div><div class="line">├── scaffolds</div><div class="line">├── scripts</div><div class="line">├── node_modules</div><div class="line">├── <span class="built_in">source</span></div><div class="line">|   └── _posts</div><div class="line">└── themes</div></pre></td></tr></table></figure>
+
+<h2 id="Hexo_配置">Hexo 配置</h2>
+<p>配置文件为<code>_config.yml</code>各个配置项的含义见官方文档-&gt;<a href="http://hexo.io/docs/configuration.html" target="_blank" rel="external">传送门</a><br>唔，照着文档配置好了之后,就配置好了呗。</p>
+<h2 id="Hexo_生成静态博客">Hexo 生成静态博客</h2>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo g</div></pre></td></tr></table></figure>
+
+<p>一大串文本闪过，静态博客已经被生成了。可以去 Public 目录下查看</p>
+<h2 id="Hexo_push_博客到_GitHub_Pages">Hexo push 博客到 GitHub Pages</h2>
+<p>前面 Hexo 配置以我为例<code>_config.yml</code>文件中的配置项</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">	<span class="built_in">type</span>: github</div><div class="line">	repository: git@github.com:luicfer/luicfer.github.io.git</div><div class="line">	branch: master</div></pre></td></tr></table></figure>
+
+<p>这样只需在命令行中输入</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo d -g</div></pre></td></tr></table></figure>
+
+<p>自动推送生成好的静态博客到 GitHub 了</p>
+<h1 id="Hit">Hit</h1>
+<p>GitHub Pages 可以使用自己的域名，但是需要的 Repo 中跟目录下有一个 CNAME 文件包含你的域名<br>而 Hexo 每次使用 <code>$ hexo d</code>发布都会对分支进行修改,而手动建立的 CNAME 文件就会被删除。</p>
+<p>解决办法为在 Hexo <code>source</code>目录下添加 CNAME 文件,这样 Hexo 自己会 push 这个文件到分支上。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="准备工作">准备工作</h1>
+<ol>
+<li>GitHub</li>
+<li>Node.js</li>
+<li>Hexo</li>
+</ol>
+<h2 id="GitHub">GitHub</h2>
+<p>先去 <a href="https://github.]]>
+    </summary>
+    
+      <category term="Hexo" scheme="http://ikaros.club/tags/Hexo/"/>
+    
+  </entry>
+  
+</feed>
